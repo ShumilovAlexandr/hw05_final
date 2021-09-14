@@ -173,4 +173,4 @@ class PostPagesTests(TestCase):
         self.authorized_client.get(reverse('posts:profile_unfollow',
                                    kwargs={'username': self.post.author}),
                                    follow=True)
-        self.assertEqual(Follow.objects.all().count(), follower_count)
+        self.assertNotEqual(Follow.objects.all().count(), follower_count + 1)

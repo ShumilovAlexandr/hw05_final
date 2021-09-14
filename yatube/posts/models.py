@@ -41,8 +41,6 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    text = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
@@ -52,6 +50,14 @@ class Comment(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='comments'
+    )
+    text = models.TextField(
+        'Текст поля',
+        help_text='Введите текст поля'
+    )
+    created = models.DateTimeField(
+        'Дата публикации',
+        auto_now_add=True
     )
 
     def __str__(self) -> str:
