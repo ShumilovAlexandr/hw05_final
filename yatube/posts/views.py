@@ -1,4 +1,4 @@
-import datetime as dt
+from django.utils import timezone
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -12,11 +12,12 @@ from .models import Group, Post, User, Comment, Follow
 
 @cache_page(20)
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.select_related('group').all()
     paginator = Paginator(posts, settings.POSTS_PER_PAGE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {'page_obj': page_obj}
+    context = {'page_obj': page_obj, 'index': True} or {'page_obj': page_obj,
+                                                        'follow': True}
     return render(request, 'posts/index.html', context)
 
 
@@ -60,7 +61,7 @@ def post_detail(request, post_id):
     author_posts_count = Post.objects.filter(author_id=post.author_id).count()
     comments = Comment.objects.filter(post_id=post_id)
     context = {
-        'year': dt.datetime.now().year,
+        'year': timezone.now().year,
         'post': post,
         'author_posts_count': author_posts_count,
         'form': form,
@@ -106,11 +107,13 @@ def add_comment(request, post_id):
 
 @login_required
 def follow_index(request):
-    posts = Post.objects.filter(author__following__user=request.user).all()
+    posts = Post.objects.filter(author__following__user=request.user)
     paginator = Paginator(posts, settings.POSTS_PER_PAGE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {'page_obj': page_obj, 'paginator': paginator}
+    context = {'page_obj': page_obj, 'paginator': paginator,
+               'follow': True} or {'page_obj': page_obj,
+                                   'paginator': paginator, 'index': True}
     return render(request, 'posts/follow.html', context)
 
 

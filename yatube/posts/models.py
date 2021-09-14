@@ -77,3 +77,8 @@ class Follow(models.Model):
         related_name='following',
         blank=True, null=True
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['author'], name='unique_subscrib')
+        ]

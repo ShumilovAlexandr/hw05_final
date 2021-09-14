@@ -76,6 +76,8 @@ class StaticURLTests(TestCase):
                 f'/posts/{self.post.id}/edit/':
                 '/auth/login/?next=/posts/1/edit/',
                 '/create/': '/auth/login/?next=/create/',
+                f'/profile/{self.user}/follow/':
+                f'/auth/login/?next=/profile/{self.user.username}/follow/'
             },
         }
         for client, redirect in redirects.items():
