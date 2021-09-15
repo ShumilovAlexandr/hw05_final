@@ -177,3 +177,10 @@ class PostPagesTests(TestCase):
                                    kwargs={'username': self.post.author}),
                                    follow=True)
         self.assertNotEqual(Follow.objects.all().count(), follower_count + 1)
+
+    def guest_client_subscribe_to_author(self):
+        followers_count = Follow.objects.all().count()
+        self.guest_client.get(reverse('posts:profile_follow',
+                              kwargs={'username': self.post.author}),
+                              follow=True)
+        self.assertEqual(Follow.objects.all().count(), followers_count)

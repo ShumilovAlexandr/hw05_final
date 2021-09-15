@@ -16,8 +16,7 @@ def index(request):
     paginator = Paginator(posts, settings.POSTS_PER_PAGE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {'page_obj': page_obj, 'index': True} or {'page_obj': page_obj,
-                                                        'follow': True}
+    context = {'page_obj': page_obj, 'index': True}
     return render(request, 'posts/index.html', context)
 
 
@@ -112,8 +111,7 @@ def follow_index(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {'page_obj': page_obj, 'paginator': paginator,
-               'follow': True} or {'page_obj': page_obj,
-                                   'paginator': paginator, 'index': True}
+               'follow': True}
     return render(request, 'posts/follow.html', context)
 
 
