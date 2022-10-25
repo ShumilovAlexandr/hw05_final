@@ -22,6 +22,7 @@ def search_field(fields, attname):
     return None
 
 
+
 def search_refind(execution, user_code):
     """Поиск запуска"""
     for temp_line in user_code.split('\n'):

@@ -14,6 +14,8 @@ SECRET_KEY = 'je4@*050vtp8(5y)m^k_um1=^jk_*fg3!7mrkp3qja_7a#3se!'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'www.shumilovalexandr.pythonanywhere.com',
+    'shumilovalexandr.pythonanywhere.com',
     'localhost',
     '127.0.0.1',
     '[::1]',
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'about.apps.AboutConfig',
     'sorl.thumbnail',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -45,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'yatube.urls'
@@ -145,3 +149,7 @@ CACHES = {
         'TIMEOUT': 20,
     }
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
